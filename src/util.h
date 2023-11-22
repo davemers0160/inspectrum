@@ -25,6 +25,12 @@
 #include <math.h>
 #include <sstream>
 
+#if defined(_WIN32) | defined(__WIN32__) | defined(__WIN32) | defined(_WIN64) | defined(__WIN64)
+typedef long long ssize_t;
+#define SSIZE_MIN  LLONG_MIN
+#define SSIZE_MAX  LLONG_MAX
+#endif
+
 static const double Tau = M_PI * 2.0;
 
 template <class T> const T& clamp (const T& value, const T& min, const T& max)
