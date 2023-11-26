@@ -55,7 +55,7 @@ list(APPEND inspectrum_sources
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 find_package(FFTW REQUIRED)
-find_package(Liquid REQUIRED)
+find_package(LIQUID REQUIRED)
 
 include_directories(
     ${FFTW_INCLUDES}
