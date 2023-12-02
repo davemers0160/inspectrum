@@ -46,16 +46,24 @@ SpectrogramControls::SpectrogramControls(const QString & title, QWidget * parent
     layout->addRow(new QLabel(tr("<b>Spectrogram</b>")));
 
     fftSizeSlider = new QSlider(Qt::Horizontal, widget);
-    fftSizeSlider->setRange(4, 13);
+    fftSizeSlider->setRange(4, 14);
     fftSizeSlider->setPageStep(1);
+    fft_size_label = new QLabel();
+    fft_size_label->setText("FFT size: " + QString::number(2<<9));
+    fft_size_label->setAlignment(Qt::AlignCenter);
 
-    layout->addRow(new QLabel(tr("FFT size:")), fftSizeSlider);
+    //layout->addRow(new QLabel(tr("FFT size: ")), fftSizeSlider);
+    layout->addRow(fft_size_label, fftSizeSlider);
 
     zoomLevelSlider = new QSlider(Qt::Horizontal, widget);
     zoomLevelSlider->setRange(0, 10);
     zoomLevelSlider->setPageStep(1);
+    zoom_size_label = new QLabel();
+    zoom_size_label->setText("Zoom: " + QString::number(0));
+    zoom_size_label->setAlignment(Qt::AlignCenter);
 
-    layout->addRow(new QLabel(tr("Zoom:")), zoomLevelSlider);
+    //layout->addRow(new QLabel(tr("Zoom:")), zoomLevelSlider);
+    layout->addRow(zoom_size_label, zoomLevelSlider);
 
     powerMaxSlider = new QSlider(Qt::Horizontal, widget);
     powerMaxSlider->setRange(-140, 10);
@@ -152,6 +160,10 @@ void SpectrogramControls::fftOrZoomChanged(void)
 {
     int fftSize = pow(2, fftSizeSlider->value());
     int zoomLevel = std::min(fftSize, (int)pow(2, zoomLevelSlider->value()));
+
+    fft_size_label->setText("FFT size: " + QString::number(fftSize));
+    zoom_size_label->setText("Zoom: " + QString::number(zoomLevel));
+
     emit fftOrZoomChanged(fftSize, zoomLevel);
 }
 
@@ -232,6 +244,8 @@ void SpectrogramControls::timeSelectionChanged(float time)
 void SpectrogramControls::zoomIn()
 {
     zoomLevelSlider->setValue(zoomLevelSlider->value() + 1);
+    //zoom_size_label->setText("Zoom: " + QString::number(zoomLevelSlider->value()));
+
 }
 
 void SpectrogramControls::zoomOut()
